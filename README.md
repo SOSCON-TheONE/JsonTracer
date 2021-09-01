@@ -1,6 +1,15 @@
 # Preview
 
-![image-20210901151510063](README.assets/image-20210901151510063.png)
+![image-20210901155208013](README.assets/image-20210901155208013.png)
+
+![image-20210901155227681](README.assets/image-20210901155227681.png)
+
+- 추가된 내용
+  - 패널 여닫기 기능
+
+
+
+
 
 
 
