@@ -8,47 +8,62 @@ body {
 }
 
 .borad {
-  display: grid;
-  grid-template-columns: 100px auto;
   border: 0.5px solid gray;
 }
 
-.borad .left-side {
+.borad .content .level-container .level-title{
+  background-color: rgb(218, 218, 218);
+  border-bottom: 0.5px solid gray;
+  padding: 3px 5px;
+  font-size: smaller;
+}
+
+.borad .content .level-container .data-bar-container{
+  display: flex;
+  height: 25px;
+}
+
+.borad .content .level-container .data-bar-container .data-bar-title{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 3px;
+  margin: 0px;
   height: 100%;
-  width: 100px;
+  width: 200px;
+  font-weight: 600;
+  background-color: rgb(245, 245, 245);
 }
 
-.borad .left-side .top-blank{
+.borad .content .level-container .data-bar-container .data-bar {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(248, 248, 248);
+  border: 0.5px solid gray;
+  border-top: none;
+}
+
+.borad .content .level-container .data-bar-container .data-bar > div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.borad .content .ruler-container {
+  display: flex;
+}
+
+.borad .content .ruler-container .ruler-blank {
+  position: relative;
   height: 20px;
-  width: 100px;
-  border-bottom: 0.5px solid gray;
+  width: 200px;
 }
 
-.borad .left-side .title{
-  height: 20px;
-  width: 100px;
-  background-color: rgb(216, 216, 216);
-  border-bottom: 0.5px solid gray;
-  text-align: center;
-}
-
-.content {
-  
-}
-  
-.ruler {
+.borad .content .ruler-container .ruler {
   position: relative;
   width: 100%;
   height: 20px;
   background-color: rgb(255, 255, 255);
   border-bottom: 0.5px solid gray;
-}
-
-.data-bar {
-  position: relative;
-  width: 100%;
-  height: 20px;
-  background-color: rgb(240, 240, 240);
-  border: 0.5px solid gray;
-  border-top: none;
 }

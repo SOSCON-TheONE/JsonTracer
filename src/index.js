@@ -39,7 +39,9 @@ class Ruler extends React.Component {
 
     render() {
         return (
-            <div className="ruler">
+            <div className="ruler-container">
+                <div className="ruler-blank"></div>
+                <div className="ruler"></div>
             </div>
         );
     }
@@ -63,7 +65,7 @@ class Bar extends React.Component {
             bar.style.textAlign = 'center'
             bar.style.top = '0%'
             bar.style.left = `${this.state.start}%`
-            bar.style.height = '20px'
+            bar.style.height = '100%'
             bar.style.width = `${this.state.duration}%`
             bar.style.backgroundColor = "#" + Math.round(Math.random() * 0xffffff).toString(16) // 랜덤색상 부여
             let rgb = 0
@@ -86,7 +88,7 @@ class Bar extends React.Component {
     render() {
         return (
             <div className={"bar-" + this.state.idx}>
-                OP-{this.state.idx}
+                <div className="bar-title">OP-{this.state.idx}</div>
             </div>
         );
     }
@@ -107,7 +109,7 @@ class DataBar extends React.Component {
                 scale.style.top = '0%'
                 scale.style.left = `${i*10}%`
                 scale.style.position = 'absolute'
-                scale.style.height = '20px'
+                scale.style.height = '100%'
                 scale.style.width = '0.5px'
                 scale.style.backgroundColor = 'rgb(204, 204, 204)'
                 graduation.append(scale)
@@ -121,15 +123,30 @@ class DataBar extends React.Component {
 
     render() {
         return (
-            <div className="data-bar">
-                {this.renderBar(0)}
-                {this.renderBar(1)}
-                {this.renderBar(2)}
-                {this.renderBar(3)}
-                {this.renderBar(4)}
-                {this.renderBar(5)}
-                <div className="graduation">
+            <div className="data-bar-container">
+                <header className="data-bar-title"><div>category</div></header>
+                <div className="data-bar">
+                    {this.renderBar(0)}
+                    {this.renderBar(1)}
+                    {this.renderBar(2)}
+                    {this.renderBar(3)}
+                    {this.renderBar(4)}
+                    {this.renderBar(5)}
+                    <div className="graduation">
+                    </div>
                 </div>
+            </div>
+        );
+    }
+}
+
+class Level extends React.Component {
+    render() {
+        return (
+            <div className="level-container">
+                <header className="level-title">process level</header>
+                <DataBar/>
+                <DataBar/>
             </div>
         );
     }
@@ -139,15 +156,11 @@ class Board extends React.Component {
     render() {
         return (
         <div className="borad">
-            <div className="left-side">
-                <div className="top-blank"></div>
-                <div className="title">Level 1</div>
-                <div className="title">Level 2</div>
-            </div>
             <div className="content">
                 <Ruler/>
-                <DataBar/>
-                <DataBar/>
+                <Level/>
+                <Level/>
+                <Level/>
             </div>
         </div>
         );
