@@ -2,10 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
+const ruleCnt = 6 // 0ms~60ms까지 보여주겠다는 뜻
+
 class Ruler extends React.Component {
     addGraduation(){
         const ruler = document.querySelector('.ruler')
-        const cnt = 100
+        const cnt = ruleCnt*10
         for(let i=0; i<cnt+1; i++){
             let graduation = document.createElement('div')
             graduation.className = `graduation-${i}`
@@ -52,7 +54,7 @@ class Bar extends React.Component {
         super(props); // 생성자를 가질 때 반드시 작성해야 함
         this.state = {
             idx: props.idx,
-            start: props.idx*10,
+            start: props.idx,
             duration: props.duration,
         };
     }
@@ -64,9 +66,10 @@ class Bar extends React.Component {
             bar.style.cursor = 'pointer'
             bar.style.textAlign = 'center'
             bar.style.top = '0%'
-            bar.style.left = `${this.state.start}%`
+            bar.style.left = `${this.state.start/ruleCnt*10}%`
             bar.style.height = '100%'
-            bar.style.width = `${this.state.duration}%`
+            bar.style.width = `${this.state.duration/ruleCnt*10}%`
+            bar.style.zIndex = '1'
             bar.style.backgroundColor = "#" + Math.round(Math.random() * 0xffffff).toString(16) // 랜덤색상 부여
             let rgb = 0
             bar.style.backgroundColor.replace('rgb', '').replace('(', '').replace(')', '').split(', ').forEach(ele => {
@@ -96,18 +99,18 @@ class Bar extends React.Component {
 
 class DataBar extends React.Component {
     renderBar(i) {
-        return <Bar idx={ i } duration={ 5 }/>;
+        return <Bar idx={ i*10 } duration={ 5 }/>;
     }
 
     addGraduation(){
         const graduations = document.querySelectorAll('.data-bar .graduation')
-        const cnt = 10
+        const cnt = ruleCnt
         graduations.forEach(graduation => {
             for(let i=1; i<cnt; i++){
                 let scale = document.createElement('div')
                 scale.className = 'scale'
                 scale.style.top = '0%'
-                scale.style.left = `${i*10}%`
+                scale.style.left = `${i/ruleCnt*100}%`
                 scale.style.position = 'absolute'
                 scale.style.height = '100%'
                 scale.style.width = '0.5px'
