@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 class Ruler extends React.Component {
-
     addGraduation(){
         const ruler = document.querySelector('.ruler')
         const cnt = 100
@@ -47,7 +46,6 @@ class Ruler extends React.Component {
 }
 
 class Bar extends React.Component {
-
     constructor(props) {
         super(props); // 생성자를 가질 때 반드시 작성해야 함
         this.state = {
@@ -61,6 +59,7 @@ class Bar extends React.Component {
         const bars = document.querySelectorAll(`.bar-${this.state.idx}`)
         bars.forEach(bar => {
             bar.style.position = 'absolute'
+            bar.style.cursor = 'pointer'
             bar.style.textAlign = 'center'
             bar.style.top = '0%'
             bar.style.left = `${this.state.start}%`
@@ -98,6 +97,28 @@ class DataBar extends React.Component {
         return <Bar idx={ i } duration={ 5 }/>;
     }
 
+    addGraduation(){
+        const graduations = document.querySelectorAll('.data-bar .graduation')
+        const cnt = 10
+        graduations.forEach(graduation => {
+            for(let i=1; i<cnt; i++){
+                let scale = document.createElement('div')
+                scale.className = 'scale'
+                scale.style.top = '0%'
+                scale.style.left = `${i*10}%`
+                scale.style.position = 'absolute'
+                scale.style.height = '20px'
+                scale.style.width = '0.5px'
+                scale.style.backgroundColor = 'rgb(204, 204, 204)'
+                graduation.append(scale)
+            }
+        })
+    }
+
+    componentDidMount() {
+        this.addGraduation()
+    }
+
     render() {
         return (
             <div className="data-bar">
@@ -107,6 +128,8 @@ class DataBar extends React.Component {
                 {this.renderBar(3)}
                 {this.renderBar(4)}
                 {this.renderBar(5)}
+                <div className="graduation">
+                </div>
             </div>
         );
     }
