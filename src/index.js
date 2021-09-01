@@ -56,23 +56,25 @@ class Bar extends React.Component {
     }
 
     addStyle(){
-        const bar = document.querySelector(`.bar-${this.state.idx}`)
-        bar.style.position = 'absolute'
-        bar.style.textAlign = 'center'
-        bar.style.top = '0%'
-        bar.style.left = `${this.state.start}%`
-        bar.style.height = '20px'
-        bar.style.width = `${this.state.duration}%`
-        bar.style.backgroundColor = "#" + Math.round(Math.random() * 0xffffff).toString(16) // 랜덤색상 부여
-        let rgb = 0
-        bar.style.backgroundColor.replace('rgb', '').replace('(', '').replace(')', '').split(', ').forEach(ele => {
-            rgb += (ele*1)
-        });
-        if (rgb >= 700) {
-            bar.style.color = 'black'
-        } else {
-            bar.style.color = 'white'
-        }
+        const bars = document.querySelectorAll(`.bar-${this.state.idx}`)
+        bars.forEach(bar => {
+            bar.style.position = 'absolute'
+            bar.style.textAlign = 'center'
+            bar.style.top = '0%'
+            bar.style.left = `${this.state.start}%`
+            bar.style.height = '20px'
+            bar.style.width = `${this.state.duration}%`
+            bar.style.backgroundColor = "#" + Math.round(Math.random() * 0xffffff).toString(16) // 랜덤색상 부여
+            let rgb = 0
+            bar.style.backgroundColor.replace('rgb', '').replace('(', '').replace(')', '').split(', ').forEach(ele => {
+                rgb += (ele*1)
+            });
+            if (rgb >= 700) {
+                bar.style.color = 'black'
+            } else {
+                bar.style.color = 'white'
+            }
+        })
         
     }
 
@@ -112,8 +114,13 @@ class Board extends React.Component {
     render() {
         return (
         <div className="borad">
+            <div className="left-side">
+                <div className="top-blank"></div>
+                <div className="title">Level 1</div>
+            </div>
             <div className="content">
                 <Ruler/>
+                <DataBar/>
                 <DataBar/>
             </div>
         </div>
