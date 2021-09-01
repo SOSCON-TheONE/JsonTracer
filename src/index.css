@@ -1,0 +1,24 @@
+body {
+  font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 20px;
+}
+
+.borad {
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  
+}
+  
+.ruler {
+  position: relative;
+  width: 100%;
+  height: 20px;
+  background-color: rgb(218, 218, 218);
+}
+
+.data-bar {
+  position: relative;
+}
