@@ -141,12 +141,28 @@ class DataBar extends React.Component {
 }
 
 class Level extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleLevelClick = this.handleLevelClick.bind(this);
+        this.state = {isPannelOpen: true};
+    }
+
+    handleLevelClick(){
+        this.setState({isPannelOpen: !this.state.isPannelOpen})
+    }
+
     render() {
         return (
             <div className="level-container">
-                <header className="level-title">process level</header>
-                <DataBar/>
-                <DataBar/>
+                <header className="level-title" onClick={this.handleLevelClick}>
+                    { this.state.isPannelOpen ? '▶' : '▼' } process level
+                </header>
+                { this.state.isPannelOpen ?
+                    <div className="level-content">
+                        <DataBar/>
+                        <DataBar/>
+                    </div>
+                : ''}
             </div>
         );
     }
