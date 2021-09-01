@@ -7,22 +7,24 @@ class Ruler extends React.Component {
     addGraduation(){
         const ruler = document.querySelector('.ruler')
         const cnt = 100
-        for(let i=0; i<cnt; i++){
+        for(let i=0; i<cnt+1; i++){
             let graduation = document.createElement('div')
             graduation.className = `graduation-${i}`
             graduation.style.position = 'absolute'
             graduation.style.left = `${i/cnt*100}%`
             graduation.style.bottom = '0%'
             if (i%10 === 0){
-                graduation.style.width = '1px'
+                graduation.style.width = '0.5px'
                 graduation.style.height = '20px'
                 graduation.style.backgroundColor = 'black'
-                let graduationTitle = document.createElement('div')
-                graduationTitle.className = `graduation-title-${i}`
-                graduationTitle.innerText = `${i}ms`
-                graduationTitle.style.marginLeft = '3px'
-                graduationTitle.style.fontSize = '10px'
-                graduation.appendChild(graduationTitle)
+                if (i<cnt) {
+                    let graduationTitle = document.createElement('div')
+                    graduationTitle.className = `graduation-title-${i}`
+                    graduationTitle.innerText = `${i}ms`
+                    graduationTitle.style.marginLeft = '3px'
+                    graduationTitle.style.fontSize = '10px'
+                    graduation.appendChild(graduationTitle)
+                }
             } else {
                 graduation.style.width = '0.5px'
                 graduation.style.height = '5px'
@@ -117,6 +119,7 @@ class Board extends React.Component {
             <div className="left-side">
                 <div className="top-blank"></div>
                 <div className="title">Level 1</div>
+                <div className="title">Level 2</div>
             </div>
             <div className="content">
                 <Ruler/>

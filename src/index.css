@@ -10,6 +10,7 @@ body {
 .borad {
   display: grid;
   grid-template-columns: 100px auto;
+  border: 0.5px solid gray;
 }
 
 .borad .left-side {
@@ -20,12 +21,15 @@ body {
 .borad .left-side .top-blank{
   height: 20px;
   width: 100px;
+  border-bottom: 0.5px solid gray;
 }
 
 .borad .left-side .title{
   height: 20px;
   width: 100px;
   background-color: rgb(216, 216, 216);
+  border-bottom: 0.5px solid gray;
+  text-align: center;
 }
 
 .content {
@@ -36,7 +40,8 @@ body {
   position: relative;
   width: 100%;
   height: 20px;
-  background-color: rgb(218, 218, 218);
+  background-color: rgb(255, 255, 255);
+  border-bottom: 0.5px solid gray;
 }
 
 .data-bar {
