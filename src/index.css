@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  transition: width 0.2s ease;
 }
 
 body {
@@ -9,6 +10,8 @@ body {
 
 .borad {
   border: 0.5px solid gray;
+  width: 100%;
+  overflow-x: auto;
 }
 
 .borad .content .level-container .level-title{
@@ -22,6 +25,7 @@ body {
 .borad .content .level-container .data-bar-container{
   display: flex;
   height: 25px;
+  width: auto;
 }
 
 .borad .content .level-container .data-bar-container .data-bar-title{
