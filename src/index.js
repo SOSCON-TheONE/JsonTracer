@@ -1,49 +1,55 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import styled from "styled-components";
 
 const ruleCnt = 6 // 0ms~60ms까지 보여주겠다는 뜻
 
+// ================= style =======================
+const StyledRulergraduation = styled.div`
+    position: absolute;
+    left: ${(props) => props.i/props.cnt*100}%;
+    bottom: 0%;
+    width: 0.5px;
+    height: ${(props) => props.i%10 === 0? 100 : 25}%;
+    background-color: ${(props) => props.i%10 === 0? 'black' : 'gray'};
+    &:after {
+        content: '${(props) => props.i%10 === 0 && props.i<props.cnt ? props.i+'ms' : ''}';
+        margin-left: 3px;
+        font-size: 10px;
+    }
+`;
+
+const StyledBar = styled.div`
+    position: absolute;
+    cursor: pointer;
+    text-align: center;
+    top: 0%;
+    left: ${(props) => props.start/props.cnt*10}%;
+    height: 100%;
+    width: ${(props) => props.duration/props.cnt*10}%; 
+    z-index: 1;
+    background-color: ${(props) => 'rgb(' + props.start*5156%255 + ',' + props.duration*356%255 +',' + ((props.start + props.duration)*35156%255) + ')'}
+`;
+
+
+// ================= component =======================
 class Ruler extends React.Component {
-    addGraduation(){
-        const ruler = document.querySelector('.ruler')
-        const cnt = ruleCnt*10
-        for(let i=0; i<cnt+1; i++){
-            let graduation = document.createElement('div')
-            graduation.className = `graduation-${i}`
-            graduation.style.position = 'absolute'
-            graduation.style.left = `${i/cnt*100}%`
-            graduation.style.bottom = '0%'
-            if (i%10 === 0){
-                graduation.style.width = '0.5px'
-                graduation.style.height = '20px'
-                graduation.style.backgroundColor = 'black'
-                if (i<cnt) {
-                    let graduationTitle = document.createElement('div')
-                    graduationTitle.className = `graduation-title-${i}`
-                    graduationTitle.innerText = `${i}ms`
-                    graduationTitle.style.marginLeft = '3px'
-                    graduationTitle.style.fontSize = '10px'
-                    graduation.appendChild(graduationTitle)
-                }
-            } else {
-                graduation.style.width = '0.5px'
-                graduation.style.height = '5px'
-                graduation.style.backgroundColor = 'gray'
-            }
-            ruler.append(graduation)
-        }
-    }
-
-    componentDidMount() {
-        this.addGraduation()
-    }
-
     render() {
+        const mapToGraduation = () => {
+            const result = [];
+            for(let i=0; i<ruleCnt*10+1; i++){
+                result.push(<StyledRulergraduation i={i} cnt={ruleCnt*10} key={i}/>)
+            }
+            return result
+        }
+
         return (
             <div className="ruler-container">
                 <div className="ruler-blank"></div>
-                <div className="ruler"></div>
+                <div className="ruler">
+                    {mapToGraduation()}
+                </div>
             </div>
         );
     }
@@ -59,40 +65,11 @@ class Bar extends React.Component {
         };
     }
 
-    addStyle(){
-        const bars = document.querySelectorAll(`.bar-${this.state.idx}`)
-        bars.forEach(bar => {
-            bar.style.position = 'absolute'
-            bar.style.cursor = 'pointer'
-            bar.style.textAlign = 'center'
-            bar.style.top = '0%'
-            bar.style.left = `${this.state.start/ruleCnt*10}%`
-            bar.style.height = '100%'
-            bar.style.width = `${this.state.duration/ruleCnt*10}%`
-            bar.style.zIndex = '1'
-            bar.style.backgroundColor = "#" + Math.round(Math.random() * 0xffffff).toString(16) // 랜덤색상 부여
-            let rgb = 0
-            bar.style.backgroundColor.replace('rgb', '').replace('(', '').replace(')', '').split(', ').forEach(ele => {
-                rgb += (ele*1)
-            });
-            if (rgb >= 700) {
-                bar.style.color = 'black'
-            } else {
-                bar.style.color = 'white'
-            }
-        })
-        
-    }
-
-    componentDidMount() {
-        this.addStyle()
-    }
-
     render() {
         return (
-            <div className={"bar-" + this.state.idx}>
+            <StyledBar start={this.state.start} duration={this.state.duration} cnt={ruleCnt}>
                 <div className="bar-title">OP-{this.state.idx}</div>
-            </div>
+            </StyledBar>
         );
     }
 }
