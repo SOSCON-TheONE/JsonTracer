@@ -67,9 +67,22 @@ class Ruler extends React.Component {
 }
 
 class Bar extends React.Component {
+    clickBar(){
+        const info = {
+            'idx': this.props.idx,
+            'start': this.props.start, 
+            'duration': this.props.duration,
+        }
+        this.props.clickBar(info)
+    }
+
     render() {
         return (
-            <StyledBar start={this.props.start} duration={this.props.duration} cnt={this.props.cnt}>
+            <StyledBar 
+                onClick={() => this.clickBar()} 
+                start={this.props.start} 
+                duration={this.props.duration} 
+                cnt={this.props.cnt}>
                 <div className="bar-title">OP-{this.props.idx}</div>
             </StyledBar>
         );
@@ -78,7 +91,7 @@ class Bar extends React.Component {
 
 class DataBar extends React.Component {
     renderBar(i) {
-        return <Bar idx={ i*10 } start={i*10} duration={ 5 } cnt={this.props.rulerCnt}/>;
+        return <Bar clickBar={this.props.clickBar} idx={ i*10 } start={i*10} duration={ 5 } cnt={this.props.rulerCnt}/>;
     }
 
     render() {
@@ -132,8 +145,8 @@ class Level extends React.Component {
                 </header>
                 { this.state.isPannelOpen ?
                     <div className="level-content">
-                        <DataBar rulerCnt={this.props.rulerCnt}/>
-                        <DataBar rulerCnt={this.props.rulerCnt}/>
+                        <DataBar rulerCnt={this.props.rulerCnt} clickBar={this.props.clickBar}/>
+                        <DataBar rulerCnt={this.props.rulerCnt} clickBar={this.props.clickBar}/>
                     </div>
                 : ''}
             </div>
@@ -141,32 +154,67 @@ class Level extends React.Component {
     }
 }
 
+class Detail extends React.Component {
+    renderDetail() {
+        if (this.props.selectedOP) {
+            return Object.keys(this.props.selectedOP).map((key) => {
+                return  <div key={key}>{key} : {this.props.selectedOP[key]}</div>
+            });
+        } else {
+            return <div>nothing is selected</div>
+        }
+    }
+
+    render() {
+        return (
+            <div className="detail">
+                <div className="title"><div>selected stuff</div></div>
+                <div className="detail-content">
+                    {this.renderDetail()}
+                </div>
+            </div>
+        );
+    }
+}
+
 class Board extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleRulerCntClick = this.handleRulerCntClick.bind(this);
+        this.clickBar = this.clickBar.bind(this);
+    }
+
     state = {
         rulerCnt: 6,
         ratio: 100,
+        selectedOP: null,
     }
 
     handleRulerCntClick(value){
         this.setState({ratio: this.state.ratio + value})
     }
 
+    clickBar(info){
+        this.setState({selectedOP: info})
+    }
+
     render() {
         return (
-        <div>
+        <div className="main-container">
             <div className="borad">
                 <ZoomInOut ratio={this.state.ratio} className="content">
                     <Ruler rulerCnt={this.state.rulerCnt}/>
-                    <Level rulerCnt={this.state.rulerCnt}/>
-                    <Level rulerCnt={this.state.rulerCnt}/>
-                    <Level rulerCnt={this.state.rulerCnt}/>
+                    <Level rulerCnt={this.state.rulerCnt} clickBar={this.clickBar}/>
+                    <Level rulerCnt={this.state.rulerCnt} clickBar={this.clickBar}/>
+                    <Level rulerCnt={this.state.rulerCnt} clickBar={this.clickBar}/>
                 </ZoomInOut>
             </div>
             <div>
-                    Zoom In/Out {this.state.ratio}%
-                    <button onClick={() => this.handleRulerCntClick(1)}>Zoom In +</button>
-                    <button onClick={() => this.handleRulerCntClick(-1)}>Zoom Out -</button>
-                </div>
+                Zoom In/Out {this.state.ratio}%
+                <button onClick={() => this.handleRulerCntClick(1)}>Zoom In +</button>
+                <button onClick={() => this.handleRulerCntClick(-1)}>Zoom Out -</button>
+            </div>
+            <Detail selectedOP={this.state.selectedOP}/>
         </div>
         );
     }

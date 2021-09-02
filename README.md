@@ -1,11 +1,11 @@
 # Preview
 
-![image-20210901155208013](README.assets/image-20210901155208013.png)
-
-![image-20210901155227681](README.assets/image-20210901155227681.png)
+![image-20210902141241350](README.assets/image-20210902141241350.png)
 
 - 추가된 내용
   - 패널 여닫기 기능
+  - 확대 축소
+  - 막대 선택시 하단 디테일 확인 가능
 
 
 
