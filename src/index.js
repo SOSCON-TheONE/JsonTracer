@@ -36,7 +36,7 @@ const StyledBar = styled.div`
     height: 100%;
     width: ${(props) => props.duration/props.cnt*10}%; 
     z-index: 1;
-    background-color: ${(props) => 'rgb(' + props.start*5156%255 + ',' + props.duration*356%255 +',' + ((props.start + props.duration)*35156%255) + ')'} // 수정 예정
+    background-color: ${(props) => 'rgb(' + (props.name.charCodeAt(0)+110) + ',' + props.name.charCodeAt(parseInt(props.name.length/5))*4%255 +',' + (props.name.charCodeAt(props.name.length-1)*4)%255 + ')'} // 수정 예정
 `;
 
 const ZoomInOut = styled.div`
@@ -69,9 +69,7 @@ class Ruler extends React.Component {
 class Bar extends React.Component {
     clickBar(){
         const info = {
-            'idx': this.props.idx,
-            'start': this.props.start, 
-            'duration': this.props.duration,
+            ...this.props.data
         }
         this.props.clickBar(info)
     }
@@ -79,19 +77,23 @@ class Bar extends React.Component {
     render() {
         return (
             <StyledBar 
+                className="bar"
                 onClick={() => this.clickBar()} 
-                start={this.props.start} 
-                duration={this.props.duration} 
-                cnt={this.props.cnt}>
-                <div className="bar-title">OP-{this.props.idx}</div>
+                start={this.props.data.ts/1000} 
+                duration={this.props.data.dur/1000} 
+                cnt={this.props.cnt}
+                name={this.props.data.name}>
+                <div className="bar-title">{this.props.data.name}</div>
             </StyledBar>
         );
     }
 }
 
 class DataBar extends React.Component {
-    renderBar(i) {
-        return <Bar clickBar={this.props.clickBar} idx={ i*10 } start={i*10} duration={ 5 } cnt={this.props.rulerCnt}/>;
+    renderBar() {
+        return this.props.data.map((ele) => {
+            return  <Bar clickBar={this.props.clickBar} data={ele} cnt={this.props.rulerCnt} key={`${ele.name}-${ele.ts}`}/>
+        });
     }
 
     render() {
@@ -105,14 +107,9 @@ class DataBar extends React.Component {
 
         return (
             <div className="data-bar-container">
-                <header className="data-bar-title"><div>category</div></header>
+                <header className="data-bar-title"><div>{ this.props.categoryName }</div></header>
                 <div className="data-bar">
-                    {this.renderBar(0)}
-                    {this.renderBar(1)}
-                    {this.renderBar(2)}
-                    {this.renderBar(3)}
-                    {this.renderBar(4)}
-                    {this.renderBar(5)}
+                    {this.renderBar()}
                     <div className="graduation">
                         {mapToBarGraduation()}
                     </div>
@@ -136,17 +133,22 @@ class Level extends React.Component {
         this.setState({isPannelOpen: !this.state.isPannelOpen})
     }
 
+    renderDataBar() {
+        return Object.keys(this.props.data).map((key) => {
+            return  <DataBar categoryName={key} data={this.props.data[key]} key={key} rulerCnt={this.props.rulerCnt} clickBar={this.props.clickBar}/>
+        });
+    }
+
     render() {
         // const rulerCnt = this.props.rulerCnt
         return (
             <div className="level-container">
                 <header className="level-title" onClick={this.handleLevelClick}>
-                    { this.state.isPannelOpen ? '▶' : '▼' } process level
+                    { this.state.isPannelOpen ? '▶' : '▼' } { this.props.processName }
                 </header>
                 { this.state.isPannelOpen ?
                     <div className="level-content">
-                        <DataBar rulerCnt={this.props.rulerCnt} clickBar={this.props.clickBar}/>
-                        <DataBar rulerCnt={this.props.rulerCnt} clickBar={this.props.clickBar}/>
+                        { this.renderDataBar() }
                     </div>
                 : ''}
             </div>
@@ -155,10 +157,21 @@ class Level extends React.Component {
 }
 
 class Detail extends React.Component {
+    renderArgs(value){
+        return Object.keys(value).map((key) => {
+            console.log(key, value[key])
+            return <div className="arg" key={key}>ㄴ{key} : {value[key]}</div>
+        })
+    }
+
     renderDetail() {
         if (this.props.selectedOP) {
             return Object.keys(this.props.selectedOP).map((key) => {
-                return  <div key={key}>{key} : {this.props.selectedOP[key]}</div>
+                if (key === 'args') {
+                    return  <div className="args" key={key}>{key} {this.renderArgs(this.props.selectedOP[key])}</div>
+                } else {
+                    return  <div key={key}>{key} : {this.props.selectedOP[key]}</div>
+                }
             });
         } else {
             return <div>nothing is selected</div>
@@ -181,38 +194,105 @@ class Board extends React.Component {
     constructor(props) {
         super(props);
         this.handleRulerCntClick = this.handleRulerCntClick.bind(this);
+        this.handleRulerCntMultipleClick = this.handleRulerCntMultipleClick.bind(this);
         this.clickBar = this.clickBar.bind(this);
+        this.openFileSelector = this.openFileSelector.bind(this);
+        this.processFile = this.processFile.bind(this);
+        this.processData = this.processData.bind(this);
     }
 
     state = {
         rulerCnt: 6,
         ratio: 100,
         selectedOP: null,
+        fileName: null,
+        data: null,
+        MaxEndTime: null,
     }
 
     handleRulerCntClick(value){
         this.setState({ratio: this.state.ratio + value})
     }
 
+    handleRulerCntMultipleClick(value){
+        this.setState({ratio: this.state.ratio * value})
+    }
+
     clickBar(info){
         this.setState({selectedOP: info})
+    }
+
+    openFileSelector(){
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "text/plain";
+        input.onchange = (event) => {
+            this.setState({fileName: event.target.files[0].name})
+            this.processFile(event.target.files[0]);
+        };
+        input.click();
+    }
+
+    processFile(file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+            const data = JSON.parse(reader.result).traceEvents
+            this.processData(data)
+        }
+        reader.readAsText(file, /* optional */ "euc-kr");
+    }
+
+    processData(data) {
+        const processedData = {}
+        let MaxEndTime = 0
+        data.forEach(ele => {
+            if(!ele.pid) { return }
+            processedData[ele.pid] = processedData[ele.pid] ? processedData[ele.pid] : {}
+            if (processedData[ele.pid][ele.tid]) {
+                processedData[ele.pid][ele.tid].push(ele)
+            } else {
+                processedData[ele.pid][ele.tid] = []
+                processedData[ele.pid][ele.tid].push(ele)
+            }
+            
+            if (ele.ts + ele.dur > MaxEndTime){ // time range 구하기
+                MaxEndTime = ele.ts + ele.dur
+            }
+        })
+        MaxEndTime = Math.ceil(MaxEndTime/10000)
+        this.setState({rulerCnt: MaxEndTime})
+        this.setState({data: processedData})
+    }
+
+    renderLevel() {
+        return Object.keys(this.state.data).map((key) => {
+            return  <Level processName={key} data={this.state.data[key]} key={key} rulerCnt={this.state.rulerCnt} clickBar={this.clickBar}/>
+        });
     }
 
     render() {
         return (
         <div className="main-container">
-            <div className="borad">
-                <ZoomInOut ratio={this.state.ratio} className="content">
-                    <Ruler rulerCnt={this.state.rulerCnt}/>
-                    <Level rulerCnt={this.state.rulerCnt} clickBar={this.clickBar}/>
-                    <Level rulerCnt={this.state.rulerCnt} clickBar={this.clickBar}/>
-                    <Level rulerCnt={this.state.rulerCnt} clickBar={this.clickBar}/>
-                </ZoomInOut>
+            <nav>
+                <button>Record</button>
+                <button>Save</button>
+                <button onClick={() => this.openFileSelector()}>Load</button>
+                <div className="file-name"><div>{this.state.fileName}</div></div>
+            </nav>
+            <div className="board">
+                {this.state.data? 
+                    <ZoomInOut ratio={this.state.ratio} className="content">
+                        <Ruler rulerCnt={this.state.rulerCnt}/>
+                        {this.renderLevel()}
+                    </ZoomInOut>
+                : ''}
             </div>
             <div>
                 Zoom In/Out {this.state.ratio}%
-                <button onClick={() => this.handleRulerCntClick(1)}>Zoom In +</button>
-                <button onClick={() => this.handleRulerCntClick(-1)}>Zoom Out -</button>
+                <button onClick={() => this.handleRulerCntClick(50)}>Zoom In +</button>
+                <button onClick={() => this.handleRulerCntClick(-50)}>Zoom Out -</button>
+                <button onClick={() => this.handleRulerCntMultipleClick(2)}>Zoom In *2</button>
+                <button onClick={() => this.handleRulerCntMultipleClick(0.5)}>Zoom Out /2</button>
             </div>
             <Detail selectedOP={this.state.selectedOP}/>
         </div>
