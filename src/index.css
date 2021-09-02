@@ -1,15 +1,58 @@
 * {
   box-sizing: border-box;
+  transition: width 0.2s ease;
+}
+
+html {
+  height: 100%;
 }
 
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
-  margin: 20px;
+  margin: 0px;
+  padding: 20px;
+  height: 100%;
 }
 
-.borad {
-  border: 0.5px solid gray;
+#root {
+  height: 100%;
 }
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.main-container .borad {
+  border: 0.5px solid gray;
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+}
+
+.main-container .detail {
+  position: relative;
+  bottom: 0%;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid gray;
+  height: 40vh;
+}
+
+.main-container .detail .detail-content{
+  padding: 3px;
+}
+
+.main-container .detail .title{
+  display: flex;
+  align-items: center;
+  background-color: rgb(245, 245, 245);
+  border-bottom: 1px solid gray;
+  padding: 3px;
+  font-weight: 700;
+}
+
 
 .borad .content .level-container .level-title{
   background-color: rgb(218, 218, 218);
@@ -22,6 +65,7 @@ body {
 .borad .content .level-container .data-bar-container{
   display: flex;
   height: 25px;
+  width: auto;
 }
 
 .borad .content .level-container .data-bar-container .data-bar-title{

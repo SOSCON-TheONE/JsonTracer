@@ -1,130 +1,108 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import styled from "styled-components";
 
-const ruleCnt = 6 // 0ms~60ms까지 보여주겠다는 뜻
+// ================= style ======================= //
+const StyledRulergraduation = styled.div`
+    position: absolute;
+    left: ${(props) => props.i/props.cnt*100}%;
+    bottom: 0%;
+    width: 0.5px;
+    height: ${(props) => props.i%10 === 0? 100 : 25}%;
+    background-color: ${(props) => props.i%10 === 0? 'black' : 'gray'};
+    &:after {
+        content: '${(props) => props.i%10 === 0 && props.i<props.cnt ? props.i+'ms' : ''}';
+        margin-left: 3px;
+        font-size: 10px;
+    }
+`;
 
+const StyledBargraduation = styled.div`
+    top: 0%;
+    left: ${(props) => props.i/props.cnt*100}%; 
+    position: absolute;
+    height: 100%;
+    width: 0.5px;
+    background-color: rgb(204, 204, 204);
+`;
+
+const StyledBar = styled.div`
+    position: absolute;
+    cursor: pointer;
+    text-align: center;
+    top: 0%;
+    left: ${(props) => props.start/props.cnt*10}%;
+    height: 100%;
+    width: ${(props) => props.duration/props.cnt*10}%; 
+    z-index: 1;
+    background-color: ${(props) => 'rgb(' + props.start*5156%255 + ',' + props.duration*356%255 +',' + ((props.start + props.duration)*35156%255) + ')'} // 수정 예정
+`;
+
+const ZoomInOut = styled.div`
+    width: ${(props) => props.ratio || 100}%;
+`;
+
+
+// ================= component ======================= //
 class Ruler extends React.Component {
-    addGraduation(){
-        const ruler = document.querySelector('.ruler')
-        const cnt = ruleCnt*10
-        for(let i=0; i<cnt+1; i++){
-            let graduation = document.createElement('div')
-            graduation.className = `graduation-${i}`
-            graduation.style.position = 'absolute'
-            graduation.style.left = `${i/cnt*100}%`
-            graduation.style.bottom = '0%'
-            if (i%10 === 0){
-                graduation.style.width = '0.5px'
-                graduation.style.height = '20px'
-                graduation.style.backgroundColor = 'black'
-                if (i<cnt) {
-                    let graduationTitle = document.createElement('div')
-                    graduationTitle.className = `graduation-title-${i}`
-                    graduationTitle.innerText = `${i}ms`
-                    graduationTitle.style.marginLeft = '3px'
-                    graduationTitle.style.fontSize = '10px'
-                    graduation.appendChild(graduationTitle)
-                }
-            } else {
-                graduation.style.width = '0.5px'
-                graduation.style.height = '5px'
-                graduation.style.backgroundColor = 'gray'
-            }
-            ruler.append(graduation)
-        }
-    }
-
-    componentDidMount() {
-        this.addGraduation()
-    }
-
     render() {
+        const mapToRulergraduation = () => { // 줄자 눈금 반복 랜더링
+            const result = [];
+            for(let i=0; i<this.props.rulerCnt*10+1; i++){
+                result.push(<StyledRulergraduation i={i} cnt={this.props.rulerCnt*10} key={i}/>)
+            }
+            return result
+        }
+
         return (
             <div className="ruler-container">
                 <div className="ruler-blank"></div>
-                <div className="ruler"></div>
+                <div className="ruler">
+                    {mapToRulergraduation()}
+                </div>
             </div>
         );
     }
 }
 
 class Bar extends React.Component {
-    constructor(props) {
-        super(props); // 생성자를 가질 때 반드시 작성해야 함
-        this.state = {
-            idx: props.idx,
-            start: props.idx,
-            duration: props.duration,
-        };
-    }
-
-    addStyle(){
-        const bars = document.querySelectorAll(`.bar-${this.state.idx}`)
-        bars.forEach(bar => {
-            bar.style.position = 'absolute'
-            bar.style.cursor = 'pointer'
-            bar.style.textAlign = 'center'
-            bar.style.top = '0%'
-            bar.style.left = `${this.state.start/ruleCnt*10}%`
-            bar.style.height = '100%'
-            bar.style.width = `${this.state.duration/ruleCnt*10}%`
-            bar.style.zIndex = '1'
-            bar.style.backgroundColor = "#" + Math.round(Math.random() * 0xffffff).toString(16) // 랜덤색상 부여
-            let rgb = 0
-            bar.style.backgroundColor.replace('rgb', '').replace('(', '').replace(')', '').split(', ').forEach(ele => {
-                rgb += (ele*1)
-            });
-            if (rgb >= 700) {
-                bar.style.color = 'black'
-            } else {
-                bar.style.color = 'white'
-            }
-        })
-        
-    }
-
-    componentDidMount() {
-        this.addStyle()
+    clickBar(){
+        const info = {
+            'idx': this.props.idx,
+            'start': this.props.start, 
+            'duration': this.props.duration,
+        }
+        this.props.clickBar(info)
     }
 
     render() {
         return (
-            <div className={"bar-" + this.state.idx}>
-                <div className="bar-title">OP-{this.state.idx}</div>
-            </div>
+            <StyledBar 
+                onClick={() => this.clickBar()} 
+                start={this.props.start} 
+                duration={this.props.duration} 
+                cnt={this.props.cnt}>
+                <div className="bar-title">OP-{this.props.idx}</div>
+            </StyledBar>
         );
     }
 }
 
 class DataBar extends React.Component {
     renderBar(i) {
-        return <Bar idx={ i*10 } duration={ 5 }/>;
-    }
-
-    addGraduation(){
-        const graduations = document.querySelectorAll('.data-bar .graduation')
-        const cnt = ruleCnt
-        graduations.forEach(graduation => {
-            for(let i=1; i<cnt; i++){
-                let scale = document.createElement('div')
-                scale.className = 'scale'
-                scale.style.top = '0%'
-                scale.style.left = `${i/ruleCnt*100}%`
-                scale.style.position = 'absolute'
-                scale.style.height = '100%'
-                scale.style.width = '0.5px'
-                scale.style.backgroundColor = 'rgb(204, 204, 204)'
-                graduation.append(scale)
-            }
-        })
-    }
-
-    componentDidMount() {
-        this.addGraduation()
+        return <Bar clickBar={this.props.clickBar} idx={ i*10 } start={i*10} duration={ 5 } cnt={this.props.rulerCnt}/>;
     }
 
     render() {
+        const mapToBarGraduation = () => {
+            const result = [];
+            for(let i=0; i<this.props.rulerCnt; i++){
+                result.push(<StyledBargraduation i={i} cnt={this.props.rulerCnt} key={i}/>)
+            }
+            return result
+        }
+
         return (
             <div className="data-bar-container">
                 <header className="data-bar-title"><div>category</div></header>
@@ -136,6 +114,7 @@ class DataBar extends React.Component {
                     {this.renderBar(4)}
                     {this.renderBar(5)}
                     <div className="graduation">
+                        {mapToBarGraduation()}
                     </div>
                 </div>
             </div>
@@ -147,7 +126,10 @@ class Level extends React.Component {
     constructor(props) {
         super(props);
         this.handleLevelClick = this.handleLevelClick.bind(this);
-        this.state = {isPannelOpen: true};
+    }
+
+    state = {
+        isPannelOpen: true,
     }
 
     handleLevelClick(){
@@ -155,6 +137,7 @@ class Level extends React.Component {
     }
 
     render() {
+        // const rulerCnt = this.props.rulerCnt
         return (
             <div className="level-container">
                 <header className="level-title" onClick={this.handleLevelClick}>
@@ -162,8 +145,8 @@ class Level extends React.Component {
                 </header>
                 { this.state.isPannelOpen ?
                     <div className="level-content">
-                        <DataBar/>
-                        <DataBar/>
+                        <DataBar rulerCnt={this.props.rulerCnt} clickBar={this.props.clickBar}/>
+                        <DataBar rulerCnt={this.props.rulerCnt} clickBar={this.props.clickBar}/>
                     </div>
                 : ''}
             </div>
@@ -171,16 +154,67 @@ class Level extends React.Component {
     }
 }
 
-class Board extends React.Component {
+class Detail extends React.Component {
+    renderDetail() {
+        if (this.props.selectedOP) {
+            return Object.keys(this.props.selectedOP).map((key) => {
+                return  <div key={key}>{key} : {this.props.selectedOP[key]}</div>
+            });
+        } else {
+            return <div>nothing is selected</div>
+        }
+    }
+
     render() {
         return (
-        <div className="borad">
-            <div className="content">
-                <Ruler/>
-                <Level/>
-                <Level/>
-                <Level/>
+            <div className="detail">
+                <div className="title"><div>selected stuff</div></div>
+                <div className="detail-content">
+                    {this.renderDetail()}
+                </div>
             </div>
+        );
+    }
+}
+
+class Board extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleRulerCntClick = this.handleRulerCntClick.bind(this);
+        this.clickBar = this.clickBar.bind(this);
+    }
+
+    state = {
+        rulerCnt: 6,
+        ratio: 100,
+        selectedOP: null,
+    }
+
+    handleRulerCntClick(value){
+        this.setState({ratio: this.state.ratio + value})
+    }
+
+    clickBar(info){
+        this.setState({selectedOP: info})
+    }
+
+    render() {
+        return (
+        <div className="main-container">
+            <div className="borad">
+                <ZoomInOut ratio={this.state.ratio} className="content">
+                    <Ruler rulerCnt={this.state.rulerCnt}/>
+                    <Level rulerCnt={this.state.rulerCnt} clickBar={this.clickBar}/>
+                    <Level rulerCnt={this.state.rulerCnt} clickBar={this.clickBar}/>
+                    <Level rulerCnt={this.state.rulerCnt} clickBar={this.clickBar}/>
+                </ZoomInOut>
+            </div>
+            <div>
+                Zoom In/Out {this.state.ratio}%
+                <button onClick={() => this.handleRulerCntClick(1)}>Zoom In +</button>
+                <button onClick={() => this.handleRulerCntClick(-1)}>Zoom Out -</button>
+            </div>
+            <Detail selectedOP={this.state.selectedOP}/>
         </div>
         );
     }
