@@ -4,19 +4,6 @@ import Ruler from "./Ruler";
 import Detail from "./Detail";
 import Level from "./Level";
 
-// ================= style ======================= //
-const StyledBar = styled.div`
-    position: absolute;
-    cursor: pointer;
-    text-align: center;
-    top: 0%;
-    left: ${(props) => props.start/props.cnt*10}%;
-    height: 100%;
-    width: ${(props) => props.duration/props.cnt*10}%; 
-    z-index: 1;
-    background-color: ${(props) => 'rgb(' + (props.name.charCodeAt(0)+110) + ',' + props.name.charCodeAt(parseInt(props.name.length/5))*4%255 +',' + (props.name.charCodeAt(props.name.length-1)*4)%255 + ')'} // 수정 예정
-`;
-
 const ZoomInOut = styled.div`
     width: ${(props) => props.ratio || 100}%;
 `;

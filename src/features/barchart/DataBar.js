@@ -12,7 +12,7 @@ const StyledBargraduation = styled.div`
     background-color: rgb(204, 204, 204);
 `;
 
-class DataBar extends React.Component {
+class DataBar extends Component {
     renderBar() {
         return this.props.data.map((ele) => {
             return  <Bar clickBar={this.props.clickBar} data={ele} cnt={this.props.rulerCnt} key={`${ele.name}-${ele.ts}`}/>
