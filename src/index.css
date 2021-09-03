@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
 * {
   box-sizing: border-box;
   transition: width 0.2s ease;
@@ -8,9 +10,8 @@ html {
 }
 
 body {
-  font: 14px "Century Gothic", Futura, sans-serif;
+  font: 14px 'Noto Sans', sans-serif;
   margin: 0px;
-  padding: 20px;
   height: 100%;
 }
 
@@ -25,7 +26,21 @@ body {
   height: 100%;
 }
 
-.main-container .borad {
+.main-container nav{
+  display: flex;
+  gap: 3px;
+  padding: 3px;
+  background: linear-gradient(rgb(243, 243, 243), rgb(224, 224, 224));
+}
+
+.main-container nav .file-name{
+  display: flex;
+  margin-left: 5px;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-container .board {
   border: 0.5px solid gray;
   width: 100%;
   height: 100%;
@@ -37,11 +52,17 @@ body {
   bottom: 0%;
   background-color: rgb(255, 255, 255);
   border: 1px solid gray;
-  height: 40vh;
 }
 
 .main-container .detail .detail-content{
-  padding: 3px;
+  height: 30vh;
+  padding: 10px 20px;
+  overflow-y: auto;
+
+}
+
+.main-container .detail .detail-content .arg{
+  margin-left: 3px;
 }
 
 .main-container .detail .title{
@@ -54,7 +75,7 @@ body {
 }
 
 
-.borad .content .level-container .level-title{
+.board .content .level-container .level-title{
   background-color: rgb(218, 218, 218);
   border-bottom: 0.5px solid gray;
   padding: 3px 5px;
@@ -62,13 +83,13 @@ body {
   cursor: pointer;
 }
 
-.borad .content .level-container .data-bar-container{
+.board .content .level-container .data-bar-container{
   display: flex;
   height: 25px;
   width: auto;
 }
 
-.borad .content .level-container .data-bar-container .data-bar-title{
+.board .content .level-container .data-bar-container .data-bar-title{
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -80,7 +101,7 @@ body {
   background-color: rgb(245, 245, 245);
 }
 
-.borad .content .level-container .data-bar-container .data-bar {
+.board .content .level-container .data-bar-container .data-bar {
   position: relative;
   width: 100%;
   height: 100%;
@@ -89,23 +110,28 @@ body {
   border-top: none;
 }
 
-.borad .content .level-container .data-bar-container .data-bar > div{
+.board .content .level-container .data-bar-container .data-bar > div{
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.borad .content .ruler-container {
+.board .content .level-container .data-bar-container .data-bar .bar{
+  overflow: hidden;
+  font-size: smaller;
+}
+
+.board .content .ruler-container {
   display: flex;
 }
 
-.borad .content .ruler-container .ruler-blank {
+.board .content .ruler-container .ruler-blank {
   position: relative;
   height: 20px;
   width: 200px;
 }
 
-.borad .content .ruler-container .ruler {
+.board .content .ruler-container .ruler {
   position: relative;
   width: 100%;
   height: 20px;
