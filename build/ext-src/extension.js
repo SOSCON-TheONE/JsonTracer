@@ -4,7 +4,7 @@ exports.activate = void 0;
 const path = require("path");
 const vscode = require("vscode");
 function activate(context) {
-    context.subscriptions.push(vscode.commands.registerCommand("sheepy.start", () => {
+    context.subscriptions.push(vscode.commands.registerCommand("one-vscode-barchart.start", () => {
         ReactPanel.createOrShow(context.extensionPath);
     }));
 }
@@ -17,7 +17,7 @@ class ReactPanel {
         this._disposables = [];
         this._extensionPath = extensionPath;
         // Create and show a new webview panel
-        this._panel = vscode.window.createWebviewPanel(ReactPanel.viewType, "Sheepy - Hands-on FP Guide", column, {
+        this._panel = vscode.window.createWebviewPanel(ReactPanel.viewType, "ONE vscode", column, {
             // Enable javascript in the webview
             enableScripts: true,
             // And restric the webview to only loading content from our extension's `media` directory.

@@ -3,7 +3,7 @@ import * as vscode from "vscode";
 
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
-    vscode.commands.registerCommand("sheepy.start", () => {
+    vscode.commands.registerCommand("one-vscode-barchart.start", () => {
       ReactPanel.createOrShow(context.extensionPath);
     })
   );
@@ -47,7 +47,7 @@ class ReactPanel {
     // Create and show a new webview panel
     this._panel = vscode.window.createWebviewPanel(
       ReactPanel.viewType,
-      "Sheepy - Hands-on FP Guide",
+      "ONE vscode",
       column,
       {
         // Enable javascript in the webview
