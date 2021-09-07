@@ -11,6 +11,7 @@ html {
 
 body {
   font: 14px 'Noto Sans', sans-serif;
+  color: black;
   margin: 0px;
   height: 100%;
 }
@@ -78,6 +79,13 @@ body {
   font-weight: 700;
 }
 
+.board {
+  background-color: white;
+}
+
+.main-container .menu-bar {
+  background-color: white;
+}
 
 .board .content .level-container .level-title{
   background-color: rgb(218, 218, 218);

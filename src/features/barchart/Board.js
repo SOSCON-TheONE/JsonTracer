@@ -105,7 +105,7 @@ class Board extends Component {
                     </ZoomInOut>
                 : ''}
             </div>
-            <div>
+            <div className="menu-bar">
                 Zoom In/Out {this.state.ratio}%
                 <button onClick={() => this.handleRulerCntClick(50)}>Zoom In +</button>
                 <button onClick={() => this.handleRulerCntClick(-50)}>Zoom Out -</button>
