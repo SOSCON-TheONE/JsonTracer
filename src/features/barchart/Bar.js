@@ -11,7 +11,7 @@ const StyledBar = styled.div`
     height: 100%;
     width: ${(props) => props.duration/props.cnt*10}%; 
     z-index: 1;
-    background-color: ${(props) => 'rgb(' + (props.name.charCodeAt(0)+110) + ',' + props.name.charCodeAt(parseInt(props.name.length/5))*4%255 +',' + (props.name.charCodeAt(props.name.length-1)*4)%255 + ')'} // 수정 예정
+    background-color: ${(props) => props.backgroundColor};
 `;
 
 class Bar extends Component {
@@ -19,6 +19,7 @@ class Bar extends Component {
         const info = {
             ...this.props.data
         }
+        delete info["backgroundColor"]
         this.props.clickBar(info)
     }
 
@@ -30,7 +31,8 @@ class Bar extends Component {
                 start={this.props.data.ts/1000} 
                 duration={this.props.data.dur/1000} 
                 cnt={this.props.cnt}
-                name={this.props.data.name}>
+                name={this.props.data.name}
+                backgroundColor={this.props.data.backgroundColor}>
                 <div className="bar-title">{this.props.data.name}</div>
             </StyledBar>
         );

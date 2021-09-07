@@ -95,6 +95,10 @@ body {
   cursor: pointer;
 }
 
+.board .content .level-container .level-title .utility{
+  font-weight: 600;
+}
+
 .board .content .level-container .data-bar-container{
   display: flex;
   height: 25px;
