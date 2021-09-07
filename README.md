@@ -1,86 +1,62 @@
-# Preview
+# ONE vscode extension
 
-![image-20210902175754771](README.assets/image-20210902175754771.png)
-
-- 추가된 내용
-  - 패널 여닫기 기능
-  - 확대 축소
-  - 막대 선택시 하단 디테일 확인 가능
-  - open 버튼 클릭하여 json 파일 열고, 그에 대한 데이터 확인 가능
+publisher : SSAFY TheONE
 
 
 
+## Preview
+
+![one-preview](README.assets/one-preview.gif)
+
+- Click `Load`, a file selection dialog will pop up
+- You can `visualize` JSON files.
+- `Zoom-in/Zoom-out` is possible.
+- `GPU/CPU` usage is displayed.
+- You can click on the bar to see `More info`.
+- You can `open/close`  the panel.
 
 
 
+## To be developed
 
-# Getting Started with Create React App
+- Changed to responsive scale when zooming in/out
+- Fixed left bar
+- Bar multi-selection (individual multi-selection, section dragging)
+- Make the color a bit prettier
+- Capture
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
 
-In the project directory, you can run:
+## Discussion
 
-### `yarn start`
+- Shall we change to dark mode?
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `yarn test`
+## Run locally
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Type `yarn` to create `node_modules`. Because the build file is also uploaded for convenience of use, `yarn watch-build` is not necessary. If the build file is deleted or there is a problem, run the command.
 
-### `yarn build`
+After that, you can run the `vscode extension` by pressing the `F5` key. Press `ctrl + shift + P` in the newly opened VScode and enter the command below to auto complete.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The following warning message may be output. Just press `Debug anyway` and proceed.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![image-20210907140731033](README.assets/image-20210907140731033.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### run
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+$ yarn
+$ yarn watch-build
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+### command
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+ONE:one-vscode-barchart
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

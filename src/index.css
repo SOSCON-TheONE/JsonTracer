@@ -11,6 +11,7 @@ html {
 
 body {
   font: 14px 'Noto Sans', sans-serif;
+  color: black;
   margin: 0px;
   height: 100%;
 }
@@ -78,6 +79,13 @@ body {
   font-weight: 700;
 }
 
+.board {
+  background-color: white;
+}
+
+.main-container .menu-bar {
+  background-color: white;
+}
 
 .board .content .level-container .level-title{
   background-color: rgb(218, 218, 218);
@@ -85,6 +93,10 @@ body {
   padding: 3px 5px;
   font-size: smaller;
   cursor: pointer;
+}
+
+.board .content .level-container .level-title .utility{
+  font-weight: 600;
 }
 
 .board .content .level-container .data-bar-container{
