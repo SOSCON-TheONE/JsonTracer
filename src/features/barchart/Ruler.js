@@ -8,11 +8,16 @@ const StyledRulergraduation = styled.div`
     bottom: 0%;
     width: 0.5px;
     height: ${(props) => props.i%10 === 0? 100 : 25}%;
-    background-color: ${(props) => props.i%10 === 0? 'black' : 'gray'};
     &:after {
         content: '${(props) => props.i%10 === 0 && props.i<props.cnt ? props.i+'ms' : ''}';
         margin-left: 3px;
         font-size: 10px;
+    }
+    @media (prefers-color-scheme: light) {
+        background-color: ${(props) => props.i%10 === 0? 'black' : 'gray'};
+    }
+    @media (prefers-color-scheme: dark) {
+        background-color: ${(props) => props.i%10 === 0? 'white' : 'gray'};
     }
 `;
 
