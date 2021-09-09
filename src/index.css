@@ -86,7 +86,6 @@ body {
 }
 
 .board .content .level-container .level-title{
-  border-bottom: 0.5px solid gray;
   padding: 3px 5px;
   font-size: smaller;
   cursor: pointer;

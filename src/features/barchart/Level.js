@@ -26,9 +26,11 @@ class Level extends Component {
         // const rulerCnt = this.props.rulerCnt
         return (
             <div className="level-container">
-                <header className="level-title" onClick={this.handleLevelClick}>
-                    { this.state.isPannelOpen ? '▶' : '▼' } { this.props.processName } <span className="utility">{this.props.utility < 1 && '(' + this.props.utility*100 + '%)'}</span>
-                </header>
+                <div className="level-header">
+                    <header className="level-title" onClick={this.handleLevelClick}>
+                        { this.state.isPannelOpen ? '▶' : '▼' } { this.props.processName } <span className="utility">{this.props.utility < 1 && '(' + this.props.utility*100 + '%)'}</span>
+                    </header>
+                </div>
                 { this.state.isPannelOpen ?
                     <div className="level-content">
                         { this.renderDataBar() }
