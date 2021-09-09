@@ -6,7 +6,7 @@ publisher : SSAFY TheONE
 
 ## Preview
 
-![one-preview](README.assets/one-preview.gif)
+![preview](README.assets/preview.gif)
 
 - Click `Load`, a file selection dialog will pop up
 - You can `visualize` JSON files.
