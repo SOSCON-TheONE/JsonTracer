@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 class Detail extends Component {
     renderArgs(value){
         return Object.keys(value).map((key) => {
-            console.log(key, value[key])
             return <div className="arg" key={key}>ㄴ{key} : {value[key]}</div>
         })
     }

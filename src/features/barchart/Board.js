@@ -65,7 +65,7 @@ class Board extends Component {
     processData(data) {
         const processedData = {}
         const backgroundColor = {}
-        const utility = {"CPU Operators": 0, "GPU Operators": 0}
+        const utility = {}
         let MaxEndTime = 0
         let colorIdx = 0
         const colorLen = this.state.colorList.length
@@ -93,17 +93,15 @@ class Board extends Component {
                 MaxEndTime = ele.ts + ele.dur
             }
 
-            if (ele.pid === "CPU Operators" || ele.pid === "GPU Operators") {
-                utility[ele.pid] += ele.dur
-            }
+            utility[ele.pid] = utility[ele.pid] !== undefined ? utility[ele.pid] + ele.dur : ele.dur
+            
         })
-        utility["CPU Operators"] = Math.round(utility["CPU Operators"]*100 / MaxEndTime)/100
-        utility["GPU Operators"] = Math.round(utility["GPU Operators"]*100 / MaxEndTime)/100
+        Object.keys(utility).forEach(key => {
+            utility[key] = Math.round(utility[key]*100 / MaxEndTime)/100
+        })
         this.setState({utility: utility})
-
         MaxEndTime = Math.ceil(MaxEndTime/10000)
         this.setState({rulerCnt: MaxEndTime})
-
         this.setState({data: processedData})
     }
 

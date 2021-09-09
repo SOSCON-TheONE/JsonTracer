@@ -26,7 +26,7 @@ class Level extends Component {
         return (
             <div className="level-container">
                 <header className="level-title" onClick={this.handleLevelClick}>
-                    { this.state.isPannelOpen ? '▶' : '▼' } { this.props.processName } <span className="utility">{this.props.utility && '(' + this.props.utility*100 + '%)'}</span>
+                    { this.state.isPannelOpen ? '▶' : '▼' } { this.props.processName } <span className="utility">{this.props.utility < 1 && '(' + this.props.utility*100 + '%)'}</span>
                 </header>
                 { this.state.isPannelOpen ?
                     <div className="level-content">
