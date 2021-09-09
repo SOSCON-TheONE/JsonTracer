@@ -1,0 +1,13 @@
+.level-title {
+  position: sticky;
+  left: 0;
+  width: 100vw;
+}
+
+.data-bar-title {
+  position: sticky;
+  left: 0;
+  width: 200px;
+  z-index: 3;
+  border-right: 0.5px solid gray;
+}
