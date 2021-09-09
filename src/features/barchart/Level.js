@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import DataBar from "./DataBar";
+import '../../styles/level.css';
 
 class Level extends Component {
     constructor(props) {
