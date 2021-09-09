@@ -1,7 +1,8 @@
 .level-title {
   position: sticky;
   left: 0;
-  width: 100vw;
+  width: 90vw;
+  background-color: var(--vscode-editor-background);
 }
 
 .data-bar-title {
@@ -10,4 +11,5 @@
   width: 200px;
   z-index: 3;
   border-right: 0.5px solid gray;
+  background-color: var(--vscode-editor-background);
 }
