@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Ruler from "./Ruler";
 import Detail from "./Detail";
 import Level from "./Level";
+import Capture from "./Capture";
 
 const ZoomInOut = styled.div`
     width: ${(props) => props.ratio || 100}%;
@@ -115,8 +116,7 @@ class Board extends Component {
         return (
         <div className="main-container">
             <nav>
-                <button>Record</button>
-                <button>Save</button>
+                <Capture/>
                 <button onClick={() => this.openFileSelector()}>Load</button>
                 <div className="file-name"><div>{this.state.fileName}</div></div>
             </nav>

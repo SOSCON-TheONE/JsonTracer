@@ -14,16 +14,17 @@ publisher : SSAFY TheONE
 - `GPU/CPU` usage is displayed.
 - You can click on the bar to see `More info`.
 - You can `open/close`  the panel.
+- Fixed left bar
+- Capture
+- Make the color a bit prettier
 
 
 
 ## To be developed
 
-- Changed to responsive scale when zooming in/out
-- Fixed left bar
-- Bar multi-selection (individual multi-selection, section dragging)
-- Make the color a bit prettier
-- Capture
+- Changed to responsive scale when zooming in/out ⏫
+- Bar multi-selection (individual multi-selection, section dragging) ⏫
+- Capture complete message pop-up 🔽
 
 
 
@@ -59,4 +60,16 @@ $ yarn watch-build
 ```
 ONE:one-vscode-barchart
 ```
+
+
+
+### Library
+
+| name              | git                                                    | license |
+| ----------------- | ------------------------------------------------------ | ------- |
+| html2canvas       | https://github.com/niklasvh/html2canvas                | MIT     |
+| react             | https://github.com/facebook/react                      | MIT     |
+| styled-components | https://github.com/styled-components/styled-components | MIT     |
+| terser            | https://github.com/terser/terser                       | BSD     |
+|                   |                                                        |         |
 
