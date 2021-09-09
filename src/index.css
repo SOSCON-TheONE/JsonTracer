@@ -28,6 +28,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  width: 100%;
   border: 0.5px solid gray;
 }
 
@@ -36,6 +37,11 @@ body {
   gap: 3px;
   padding: 3px;
   border-bottom: 0.5px solid gray;
+}
+
+.main-container nav .capture-btns{
+  display: flex;
+  gap: 3px;
 }
 
 .main-container nav .file-name{
