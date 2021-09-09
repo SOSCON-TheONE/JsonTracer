@@ -26,7 +26,8 @@ class Board extends Component {
         fileName: null,
         data: null,
         MaxEndTime: null,
-        utility: null
+        utility: null,
+        colorList: ['aquamarine', 'cornflowerblue', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgreen', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightsteelblue', 'lime', 'limegreen', 'mediumaquamarine', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'mistyrose', 'olive', 'olivedrab', 'orange', 'orangered', 'orchid', 'palegreen', 'palevioletred', 'paleturquoise', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'thistle', 'yellowgreen', 'firebrick', 'dodgerblue', 'darkorange', 'crimson', 'darkmagenta']
     }
 
     handleRulerCntClick(value){
@@ -66,7 +67,8 @@ class Board extends Component {
         const backgroundColor = {}
         const utility = {"CPU Operators": 0, "GPU Operators": 0}
         let MaxEndTime = 0
-        const letters = '0123456789ABCDEF';
+        let colorIdx = 0
+        const colorLen = this.state.colorList.length
         data.forEach(ele => {
             // init data
             if(!ele.pid) { return }
@@ -77,10 +79,9 @@ class Board extends Component {
 
             // get background color
             if (!backgroundColor[ele.name]) {
-                backgroundColor[ele.name] = "#"
-                for (let i = 0; i < 6; i++) {
-                    backgroundColor[ele.name] += letters[Math.floor(Math.random() * 16)];
-                }
+                backgroundColor[ele.name] = this.state.colorList[colorIdx]
+                colorIdx += 1
+                colorIdx %= colorLen
             }
             ele['backgroundColor'] = backgroundColor[ele.name]
 
