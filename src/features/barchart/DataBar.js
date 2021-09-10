@@ -15,15 +15,21 @@ const StyledBargraduation = styled.div`
 class DataBar extends Component {
     renderBar() {
         return this.props.data.map((ele) => {
-            return  <Bar clickBar={this.props.clickBar} data={ele} cnt={this.props.rulerCnt} key={`${ele.name}-${ele.ts}`}/>
+            return  <Bar 
+                        calculatedEndTime={this.props.calculatedEndTime}
+                        digit={this.props.digit}
+                        clickBar={this.props.clickBar}
+                        data={ele}
+                        key={`${ele.name}-${ele.ts}`}
+                        />
         });
     }
 
     render() {
         const mapToBarGraduation = () => {
             const result = [];
-            for(let i=0; i<this.props.rulerCnt; i++){
-                result.push(<StyledBargraduation i={i} cnt={this.props.rulerCnt} key={i}/>)
+            for(let i=0; i<parseInt(this.props.calculatedEndTime/(10**(this.props.digit-1))); i++){
+                result.push(<StyledBargraduation i={i} cnt={parseInt(this.props.calculatedEndTime/(10**(this.props.digit-1)))} key={i}/>)
             }
             return result
         }

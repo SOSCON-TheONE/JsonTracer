@@ -18,7 +18,15 @@ class Level extends Component {
 
     renderDataBar() {
         return Object.keys(this.props.data).map((key) => {
-            return  <DataBar categoryName={key} data={this.props.data[key]} key={key} rulerCnt={this.props.rulerCnt} clickBar={this.props.clickBar}/>
+            return  <DataBar
+                        calculatedEndTime={this.props.calculatedEndTime}
+                        digit={this.props.digit}
+                        unit={this.props.unit}
+                        categoryName={key}
+                        data={this.props.data[key]}
+                        key={key}
+                        rulerCnt={this.props.rulerCnt}
+                        clickBar={this.props.clickBar}/>
         });
     }
 
