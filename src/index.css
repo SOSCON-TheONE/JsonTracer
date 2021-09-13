@@ -23,20 +23,35 @@ body {
   height: 100%;
 }
 
+button {
+  border: 1px solid var(--vscode-foreground);
+  color: var(--vscode-foreground);
+  background-color: var(--vscode-editor-background);
+  border-radius: 2px;
+  padding: 3px 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  background-color: var(--vscode-foreground);
+  color: var(--vscode-editor-background);
+}
+
 .main-container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
   width: 100%;
-  border: 0.5px solid gray;
+  border: 0.5px solid var(--vscode-foreground, gray);
 }
 
 .main-container nav{
   display: flex;
   gap: 3px;
   padding: 3px;
-  border-bottom: 0.5px solid gray;
+  border-bottom: 0.5px solid var(--vscode-foreground, gray);
 }
 
 .main-container nav .capture-btns{
@@ -52,14 +67,17 @@ body {
 }
 
 .main-container .board {
-  border-bottom: 0.5px solid gray;
+  border-bottom: 0.5px solid var(--vscode-foreground, gray);
   width: 100%;
   height: 100%;
   overflow-x: auto;
 }
 
 .main-container .menu-bar {
-  border-bottom: 0.5px solid gray;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  border-bottom: 0.5px solid var(--vscode-foreground, gray);
   padding: 3px;
 }
 
@@ -82,13 +100,13 @@ body {
 .main-container .detail .title{
   display: flex;
   align-items: center;
-  border-bottom: 0.5px solid gray;
+  border-bottom: 0.5px solid var(--vscode-foreground, gray);
   padding: 3px;
   font-weight: 700;
 }
 
 .board .content .level-container{
-  border-bottom: 0.5px solid gray;
+  border-bottom: 0.5px solid var(--vscode-foreground, gray);
 }
 
 .board .content .level-container .level-title{
@@ -116,14 +134,14 @@ body {
   height: 100%;
   width: 200px;
   font-weight: 600;
-  border-right: 0.5px solid gray;
+  border-right: 0.5px solid var(--vscode-foreground, gray);
 }
 
 .board .content .level-container .data-bar-container .data-bar {
   position: relative;
   width: 100%;
   height: 100%;
-  border-bottom: 0.5px solid gray;
+  border-bottom: 0.5px solid var(--vscode-foreground, gray);
 }
 
 .board .content .level-container .data-bar-container:last-child .data-bar {
@@ -144,7 +162,7 @@ body {
 
 .board .content .ruler-container {
   display: flex;
-  border-bottom: 0.5px solid gray;
+  border-bottom: 0.5px solid var(--vscode-foreground, gray);
 }
 
 .board .content .ruler-container .ruler-blank {
@@ -154,7 +172,39 @@ body {
 }
 
 .board .content .ruler-container .ruler {
+  display: flex;
   position: relative;
   width: 100%;
   height: 20px;
+}
+
+.board .content .ruler-container .ruler .graduation {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 20px;
+  border-left: 0.5px solid var(--vscode-foreground, black); 
+}
+
+.board .content .ruler-container .ruler .graduation .small-graduation{
+  position: relative;
+  bottom: 0%;
+  width: 100%;
+  height: 10px;
+  border-left: 0.5px solid var(--vscode-foreground, gray); 
+}
+
+.board .content .ruler-container .ruler .graduation .small-graduation:first-child{
+  position: relative;
+  bottom: 0%;
+  width: 100%;
+  height: 80%;
+  border-left: none;
+  font-size: x-small;
+}
+
+.board .content .ruler-container .ruler .graduation .small-graduation .index{
+  position: absolute;
+  z-index: 1;
+  margin-left: 3px;
 }
