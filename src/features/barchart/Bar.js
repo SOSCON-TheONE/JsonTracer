@@ -7,9 +7,9 @@ const StyledBar = styled.div`
     cursor: pointer;
     text-align: center;
     top: 0%;
-    left: ${(props) => props.start/props.cnt*10}%;
+    left: ${(props) => props.start/props.calculatedEndTime*100}%;
     height: 100%;
-    width: ${(props) => props.duration/props.cnt*10}%; 
+    width: ${(props) => props.duration/props.calculatedEndTime*100}%; 
     z-index: 1;
     background-color: ${(props) => props.backgroundColor};
 `;
@@ -22,15 +22,16 @@ class Bar extends Component {
         delete info["backgroundColor"]
         this.props.clickBar(info)
     }
-
+    
     render() {
         return (
             <StyledBar 
                 className="bar"
+                calculatedEndTime={this.props.calculatedEndTime}
+                digit={this.props.digit}
                 onClick={() => this.clickBar()} 
-                start={this.props.data.ts/1000} 
-                duration={this.props.data.dur/1000} 
-                cnt={this.props.cnt}
+                start={this.props.data.ts}
+                duration={this.props.data.dur}
                 name={this.props.data.name}
                 backgroundColor={this.props.data.backgroundColor}>
                 <div className="bar-title">{this.props.data.name}</div>

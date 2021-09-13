@@ -26,8 +26,10 @@ class Board extends Component {
         selectedOP: null,
         fileName: null,
         data: null,
-        MaxEndTime: null,
+        calculatedEndTime: null,
         utility: null,
+        digit: null,
+        displayTimeUnit: null,
         colorList: ['aquamarine', 'cornflowerblue', 'khaki', 'lavender', 'lavenderblush', 'lawngreen', 'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgreen', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightsteelblue', 'lime', 'limegreen', 'mediumaquamarine', 'mediumorchid', 'mediumpurple', 'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise', 'mediumvioletred', 'mistyrose', 'olive', 'olivedrab', 'orange', 'orangered', 'orchid', 'palegreen', 'palevioletred', 'paleturquoise', 'peru', 'pink', 'plum', 'powderblue', 'rosybrown', 'thistle', 'yellowgreen', 'firebrick', 'dodgerblue', 'darkorange', 'crimson', 'darkmagenta']
     }
 
@@ -58,6 +60,7 @@ class Board extends Component {
         const reader = new FileReader();
         reader.onload = () => {
             const data = JSON.parse(reader.result).traceEvents
+            this.setState({displayTimeUnit: JSON.parse(reader.result).displayTimeUnit})
             this.processData(data)
         }
         reader.readAsText(file, /* optional */ "euc-kr");
@@ -101,14 +104,31 @@ class Board extends Component {
             utility[key] = Math.round(utility[key]*100 / MaxEndTime)/100
         })
         this.setState({utility: utility})
-        MaxEndTime = Math.ceil(MaxEndTime/10000)
-        this.setState({rulerCnt: MaxEndTime})
+
+        let MaxEndTime_ = MaxEndTime
+        let deci = 0
+        while (MaxEndTime_ > 0) {
+            MaxEndTime_ = parseInt(MaxEndTime_ / 10)
+            deci += 1
+        }
+        
+        this.setState({rulerCnt: Math.ceil(MaxEndTime/(10**(deci-1)))*(10**(deci-1))}) // MaxEndTime 올림한 수
+        this.setState({calculatedEndTime: Math.ceil(MaxEndTime/(10**(deci-1)))*(10**(deci-1))}) // MaxEndTime 올림한 수
+        this.setState({digit: deci}) // MaxEndTime의 자릿수
         this.setState({data: processedData})
     }
 
     renderLevel() {
         return Object.keys(this.state.data).map((key) => {
-            return  <Level processName={key} utility={this.state.utility[key]} data={this.state.data[key]} key={key} rulerCnt={this.state.rulerCnt} clickBar={this.clickBar}/>
+            return  <Level 
+                        calculatedEndTime={this.state.calculatedEndTime}
+                        digit={this.state.digit}
+                        processName={key}
+                        utility={this.state.utility[key]}
+                        data={this.state.data[key]}
+                        key={key}
+                        rulerCnt={this.state.rulerCnt}
+                        clickBar={this.clickBar}/>
         });
     }
 
@@ -123,7 +143,10 @@ class Board extends Component {
             <div className="board">
                 {this.state.data? 
                     <ZoomInOut ratio={this.state.ratio} className="content">
-                        <Ruler rulerCnt={this.state.rulerCnt}/>
+                        <Ruler
+                            calculatedEndTime={this.state.calculatedEndTime}
+                            digit={this.state.digit}
+                            rulerCnt={this.state.rulerCnt}/>
                         {this.renderLevel()}
                     </ZoomInOut>
                 : ''}
@@ -135,7 +158,7 @@ class Board extends Component {
                 <button onClick={() => this.handleRulerCntMultipleClick(2)}>Zoom In *2</button>
                 <button onClick={() => this.handleRulerCntMultipleClick(0.5)}>Zoom Out /2</button>
             </div>
-            <Detail selectedOP={this.state.selectedOP}/>
+            <Detail selectedOP={this.state.selectedOP} displayTimeUnit={this.state.displayTimeUnit}/>
         </div>
         );
     }
