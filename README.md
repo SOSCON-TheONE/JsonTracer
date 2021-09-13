@@ -2,35 +2,46 @@
 
 publisher : SSAFY TheONE
 
+update: 21.09.13
+
 
 
 ## Preview
 
-![preview](README.assets/preview.gif)
+![preview_0913](README.assets/preview_0913.gif)
+
+
+
+## Done
 
 - Click `Load`, a file selection dialog will pop up
 - You can `visualize` JSON files.
 - `Zoom-in/Zoom-out` is possible.
-- `GPU/CPU` usage is displayed.
+- `pid`(GPU/CPU) usage is displayed.
 - You can click on the bar to see `More info`.
 - You can `open/close`  the panel.
 - Fixed left bar
-- Capture
 - Make the color a bit prettier
 
+- When zoomed in/out, the scale is dynamically created/deleted.
+
+- It's linked to the me in vcode.
+
+| dark+                           | light+                            | All vcode theme support.      |
+| ------------------------------- | --------------------------------- | ----------------------------- |
+| ![dark](README.assets/dark.PNG) | ![light](README.assets/light.PNG) | ![etc](README.assets/etc.PNG) |
 
 
-## To be developed
 
-- Changed to responsive scale when zooming in/out ⏫
-- Bar multi-selection (individual multi-selection, section dragging) ⏫
-- Capture complete message pop-up 🔽
+## Todo
+
+- Bar `multi-selection` (individual multi-selection, section dragging). ⏫
+- Zoom in with the `slider`. 🔼
+- When you click `origin`, appear the node graph as a new web view. 🔼
+- Capture complete message pop-up. 🔽
+- Capture (Rejected from vcode webview due to security issues). 💥
 
 
-
-## Discussion
-
-- Shall we change to dark mode?
 
 
 
@@ -46,7 +57,13 @@ The following warning message may be output. Just press `Debug anyway` and proce
 
 
 
-### run
+### Install
+
+If there is no nodejs or yarn, you should install `nodejs` and `$npm install yarn`
+
+
+
+### Run
 
 ```
 $ yarn
@@ -55,7 +72,7 @@ $ yarn watch-build
 
 
 
-### command
+### Command
 
 ```
 ONE:one-vscode-barchart
