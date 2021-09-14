@@ -1,12 +1,12 @@
 .level-header {
-  border-bottom: 0.5px solid gray;
+  border-bottom: 0.5px solid var(--vscode-foreground, gray);
 }
 
 .level-title {
   position: sticky;
   left: 0;
   width: 90vw;
-  background-color: var(--vscode-editor-background);
+  background-color: var(--vscode-editor-background, white);
 }
 
 .data-bar-title {
@@ -14,6 +14,6 @@
   left: 0;
   width: 200px;
   z-index: 3;
-  border-right: 0.5px solid gray;
-  background-color: var(--vscode-editor-background);
+  border-right: 0.5px solid var(--vscode-foreground, gray);
+  background-color: var(--vscode-editor-background, white);
 }

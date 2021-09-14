@@ -21,7 +21,7 @@ class Board extends Component {
     }
 
     state = {
-        rulerCnt: 6,
+        rulerCnt: null,
         ratio: 100,
         selectedOP: null,
         fileName: null,
@@ -34,18 +34,49 @@ class Board extends Component {
     }
 
     handleRulerCntClick(value){
-        this.setState({ratio: this.state.ratio + value})
+        if (this.state.ratio === 100 && value < 0) {
+            return
+        }
+        if (this.state.ratio + value <= 100) {
+            this.setState({ratio: 100})
+        } else if (this.state.ratio + value >= 5000) {
+            this.setState({ratio: 5000})
+        } else {
+            this.setState({ratio: this.state.ratio + value})
+        }
     }
 
     handleRulerCntMultipleClick(value){
-        this.setState({ratio: this.state.ratio * value})
+        if (this.state.ratio === 100 && value < 1) {
+            return
+        }
+        if (this.state.ratio * value <= 100) {
+            this.setState({ratio: 100})
+        } else if (this.state.ratio * value >= 5000) {
+            this.setState({ratio: 5000})
+        } else {
+            this.setState({ratio: this.state.ratio * value})
+        }
     }
 
     clickBar(info){
         this.setState({selectedOP: info})
     }
 
+    initFIle(){
+        this.setState({rulerCnt: null})
+        this.setState({ratio: 100})
+        this.setState({selectedOP: null})
+        this.setState({fileName: null})
+        this.setState({data: null})
+        this.setState({calculatedEndTime: null})
+        this.setState({utility: null})
+        this.setState({digit: null})
+        this.setState({displayTimeUnit: null})
+    }
+
     openFileSelector(){
+        this.initFIle()
         const input = document.createElement("input");
         input.type = "file";
         input.accept = "text/plain";
@@ -144,6 +175,7 @@ class Board extends Component {
                 {this.state.data? 
                     <ZoomInOut ratio={this.state.ratio} className="content">
                         <Ruler
+                            ratio={this.state.ratio}
                             calculatedEndTime={this.state.calculatedEndTime}
                             digit={this.state.digit}
                             rulerCnt={this.state.rulerCnt}/>
