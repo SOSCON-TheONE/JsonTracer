@@ -2,13 +2,13 @@
 
 publisher : SSAFY TheONE
 
-update: 21.09.13
+update: 21.09.14
 
 
 
 ## Preview
 
-![preview_0913](README.assets/preview_0913.gif)
+![image-20210914142617522](README.assets/image-20210914142617522.png)
 
 
 
@@ -22,10 +22,9 @@ update: 21.09.13
 - You can `open/close`  the panel.
 - Fixed left bar
 - Make the color a bit prettier
-
 - When zoomed in/out, the scale is dynamically created/deleted.
-
-- It's linked to the me in vcode.
+- Zoom in with the `slider`.
+- It's linked to the me in vcode. All elements follow the vscdoe theme color.
 
 | dark+                           | light+                            | All vcode theme support.      |
 | ------------------------------- | --------------------------------- | ----------------------------- |
@@ -36,7 +35,6 @@ update: 21.09.13
 ## Todo
 
 - Bar `multi-selection` (individual multi-selection, section dragging). ⏫
-- Zoom in with the `slider`. 🔼
 - When you click `origin`, appear the node graph as a new web view. 🔼
 - Capture complete message pop-up. 🔽
 - Capture (Rejected from vcode webview due to security issues). 💥
@@ -88,5 +86,5 @@ ONE:one-vscode-barchart
 | react             | https://github.com/facebook/react                      | MIT     |
 | styled-components | https://github.com/styled-components/styled-components | MIT     |
 | terser            | https://github.com/terser/terser                       | BSD     |
-|                   |                                                        |         |
+| react-input-range | https://github.com/davidchin/react-input-range         | MIT     |
 

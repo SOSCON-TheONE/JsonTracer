@@ -4,6 +4,7 @@ import Ruler from "./Ruler";
 import Detail from "./Detail";
 import Level from "./Level";
 import Capture from "./Capture";
+import Slider from "./Slider";
 
 const ZoomInOut = styled.div`
     width: ${(props) => props.ratio || 100}%;
@@ -13,11 +14,11 @@ class Board extends Component {
     constructor(props) {
         super(props);
         this.handleRulerCntClick = this.handleRulerCntClick.bind(this);
-        this.handleRulerCntMultipleClick = this.handleRulerCntMultipleClick.bind(this);
         this.clickBar = this.clickBar.bind(this);
         this.openFileSelector = this.openFileSelector.bind(this);
         this.processFile = this.processFile.bind(this);
         this.processData = this.processData.bind(this);
+        this.changeRatio = this.changeRatio.bind(this);
     }
 
     state = {
@@ -46,17 +47,8 @@ class Board extends Component {
         }
     }
 
-    handleRulerCntMultipleClick(value){
-        if (this.state.ratio === 100 && value < 1) {
-            return
-        }
-        if (this.state.ratio * value <= 100) {
-            this.setState({ratio: 100})
-        } else if (this.state.ratio * value >= 5000) {
-            this.setState({ratio: 5000})
-        } else {
-            this.setState({ratio: this.state.ratio * value})
-        }
+    changeRatio(value){
+        this.setState({ratio: value})
     }
 
     clickBar(info){
@@ -167,9 +159,18 @@ class Board extends Component {
         return (
         <div className="main-container">
             <nav>
-                <Capture/>
-                <button onClick={() => this.openFileSelector()}>Load</button>
-                <div className="file-name"><div>{this.state.fileName}</div></div>
+                <div className="file-menu">
+                    <Capture/>
+                    <button onClick={() => this.openFileSelector()}>Load</button>
+                    <div className="file-name"><div>{this.state.fileName}</div></div>
+                </div>
+                <div className="zoom-menu">
+                    <div className="zoom-btns">
+                        <button onClick={() => this.handleRulerCntClick(50)}>ZoomIn</button>
+                        <button onClick={() => this.handleRulerCntClick(-50)}>ZoomOut</button>
+                    </div>
+                    <Slider ratio={this.state.ratio} changeRatio={this.changeRatio}/>
+                </div>
             </nav>
             <div className="board">
                 {this.state.data? 
@@ -182,13 +183,6 @@ class Board extends Component {
                         {this.renderLevel()}
                     </ZoomInOut>
                 : ''}
-            </div>
-            <div className="menu-bar">
-                Zoom In/Out {this.state.ratio}%
-                <button onClick={() => this.handleRulerCntClick(50)}>Zoom In +</button>
-                <button onClick={() => this.handleRulerCntClick(-50)}>Zoom Out -</button>
-                <button onClick={() => this.handleRulerCntMultipleClick(2)}>Zoom In *2</button>
-                <button onClick={() => this.handleRulerCntMultipleClick(0.5)}>Zoom Out /2</button>
             </div>
             <Detail selectedOP={this.state.selectedOP} displayTimeUnit={this.state.displayTimeUnit}/>
         </div>
